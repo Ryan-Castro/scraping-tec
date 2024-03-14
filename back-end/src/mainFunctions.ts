@@ -34,4 +34,15 @@ export default new class mainFunctions {
             }
         })
     }
+    async whiteFile(nameFile:string, data: string): Promise<boolean> {
+        return await new Promise(async (resolve, reject)=>{
+            try{
+                const path = "./files/" + nameFile
+                fs.writeFileSync(path, data)
+                resolve(true)
+            }catch (err){
+                reject(err)
+            }
+        })
+    }
 }
