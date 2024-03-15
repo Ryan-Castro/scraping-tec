@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import moment from 'moment';
 import mainFunctions from '../mainFunctions';
-import scrapingTerabyte from '../usecase/DoTerabyteCase'
+import scrapingPichau from '../usecase/DoPichauCase'
 
 
 const router = Router()
@@ -9,42 +9,37 @@ const router = Router()
 router.get("/search/placavideoamd", async (req: Request, res: Response) =>{
     rounterFunction(
         res, 
-        "terabyte/placaVideoAmd.json", 
-        "https://www.terabyteshop.com.br/hardware/placas-de-video/amd-radeon",
+        "pichau/placaVideoAmd.json", 
+        "https://www.pichau.com.br/hardware/placa-de-video/amd",
         "amd"
     )
 })
 router.get("/search/placavideonvidia", async (req: Request, res: Response) =>{
     rounterFunction(
         res, 
-        "terabyte/placaVideoNvidia.json", 
-        "https://www.terabyteshop.com.br/hardware/placas-de-video/nvidia-geforce",
+        "pichau/placaVideoNvidia.json", 
+        "https://www.pichau.com.br/hardware/placa-de-video/nvidia",
         "nvidia"
     )
 })
 router.get("/search/processadorintel", async (req: Request, res: Response) =>{
     rounterFunction(
         res, 
-        "terabyte/processadorIntel.json", 
-        "https://www.terabyteshop.com.br/hardware/processadores/intel",
+        "pichau/processadorIntel.json", 
+        "https://www.pichau.com.br/hardware/processadores/intel",
         "intel"
     )
 })
 router.get("/search/processadoramd", async (req: Request, res: Response) =>{
     rounterFunction(
         res, 
-        "terabyte/processadorAmd.json", 
-        "https://www.terabyteshop.com.br/hardware/processadores/amd-ryzen",
+        "pichau/processadorAmd.json", 
+        "https://www.pichau.com.br/hardware/processadores/amd",
         "amd"
     )
 })
 router.get("/search/promocoes", async (req: Request, res: Response) =>{
-    rounterFunction(
-        res, 
-        "terabyte/promocoes.json", 
-        "https://www.terabyteshop.com.br/promocoes",
-        ""
-    )
+    res.json({"Erro": "Site não contem essa rota"})
 })
 
 
@@ -61,7 +56,7 @@ async function rounterFunction(res: Response, nameFile: string, link: string, ma
     if(datajson[dateCurrent]){
         res.json(datajson[dateCurrent])
     } else {
-        const items = await scrapingTerabyte.start(link, marca)
+        const items = await scrapingPichau.start(link, marca)
         let dataSaved: any = {}
         dataSaved[dateCurrent] = items
         await mainFunctions.whiteFile(nameFile, JSON.stringify(dataSaved))

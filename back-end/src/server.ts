@@ -1,6 +1,8 @@
 import express from 'express'
 import { Router, Request, Response } from 'express';
 import terabyte from './routes/terabyte'
+import kabum from './routes/kabum'
+import pichau from './routes/pichau'
 
 const app = express();
 const route = Router()
@@ -13,6 +15,9 @@ route.get('/', (req: Request, res: Response) => {
 
 
 route.use('/terabyte', terabyte)
+route.use('/kabum', kabum)
+route.use('/pichau', pichau)
+
 
 
 

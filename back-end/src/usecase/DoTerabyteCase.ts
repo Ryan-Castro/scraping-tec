@@ -7,9 +7,7 @@ export default new class scrapingTerabyte {
 
   async start(link: string, marca?: string): Promise<item[]>{
     return new Promise(async (resolve)=>{
-      const browser = await puppeteer.launch({
-        headless: false
-      });
+      const browser = await puppeteer.launch();
       try {
         const page = await browser.newPage();
         await page.goto(link)
