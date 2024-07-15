@@ -3,8 +3,10 @@ import { Router, Request, Response } from 'express';
 import terabyte from './routes/terabyte'
 import kabum from './routes/kabum'
 import pichau from './routes/pichau'
+import cors from 'cors'
 
 const app = express();
+app.use(cors())
 const route = Router()
 app.use(express.json())
 

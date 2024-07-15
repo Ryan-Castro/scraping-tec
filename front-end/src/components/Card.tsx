@@ -9,13 +9,13 @@ interface ICard{
 
 export default function Card(props:ICard) {
     return (
-        <div>
+        <a className="text-white p-4 flex" href={props.link}>
             <Image src={props.src} alt="" width="100" height={100}/>
-            <div>
-                <h2>{props.title}</h2>
-                <p>Preço: R${props.price}</p>
+            <div className="pl-2">
+                <h2 className="mb-2">{props.title}</h2>
+                <p>Preço: <span className="text-xl">R${props.price}</span></p>
             </div>
-        </div>
+        </a>
     );
   }
   

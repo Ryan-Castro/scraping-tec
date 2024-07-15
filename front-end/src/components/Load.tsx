@@ -10,7 +10,7 @@ export default function Load(props:{isHidden: boolean}) {
         screenLoadRef.current?.classList.add("flex")
     }
     return (
-        <div className="h-screen w-screen absolute bg-black opacity-50 justify-center items-center" ref={screenLoadRef}>
+        <div className="hidden h-screen w-screen absolute bg-black opacity-50 justify-center items-center" ref={screenLoadRef}>
             <div className="w-40 h-40 border rounded-full flex justify-center" id="loadCircle">
                 <div className="w-5 h-5 bg-white rounded-full"></div>
             </div>

@@ -7,13 +7,17 @@ export default new class scrapingTerabyte {
 
   async start(link: string, marca?: string): Promise<item[]>{
     return new Promise(async (resolve)=>{
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({headless:false});
       try {
         const page = await browser.newPage();
         await page.goto(link)
         await mainFunctions.waitFor(10000)
-        await page.waitForSelector("#bannerPop > div > div > button")
-        await page.click("#bannerPop > div > div > button")
+        try{
+          await page.waitForSelector("#bannerPop > div > div > button")
+          await page.click("#bannerPop > div > div > button")
+        }catch{
+
+        }
         let isNext = await page.$$eval("div#prodarea > div.pbox", elements=>elements[elements.length - 1].querySelector("div.prod-new-price")?.innerHTML)
         let currentPage = 1
         while(isNext && currentPage < 3){

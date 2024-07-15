@@ -3,7 +3,7 @@
 import Card from "@/components/Card";
 import Header from "@/components/Header";
 import Load from "@/components/Load";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Iitem{
   nome: string,
@@ -15,11 +15,18 @@ interface Iitem{
 export default function Home() {
   const [items, setItems] = useState<Iitem[]>([])
   const [itemsFiltred, setItemsFiltred] = useState<Iitem[]>([])
-
+  const [load, setLoad] = useState(true)
+  
+  const select = useRef<HTMLSelectElement>(null)
   const menuRef = useRef<HTMLUListElement>(null)
+  const inputSearch = useRef<HTMLInputElement>(null)
 
-  function  handleScrap(prod: string, index:number){
+  async function  handleScrap(prod: string, index:number){
+    setLoad(false)
     let routes: string[] = []
+    for(let i = 0; i < menuRef.current!.children.length; i++){
+      menuRef.current?.children[i].classList.remove("bg-zinc-400")
+    }
     menuRef.current?.children[index].classList.add("bg-zinc-400")
     switch (prod) {
       case "placadevideo": routes = [
@@ -47,28 +54,53 @@ export default function Home() {
         break;
     }
     let itemsref: Iitem[] = []
-    routes.forEach(async (route)=>{
+    for(let route of routes){
       await fetch("http://localhost:3333"+route).then((res)=>res.json()).then((json)=>{
         itemsref = [...itemsref, ...json]
       })
-    })
+    }
     setItems(itemsref)
-    setItemsFiltred(itemsref)
+    filterItems(itemsref)
+    setLoad(true)
+  }
+
+  async function filterItems(inputItems?: Iitem[]){ 
+    const opSelected = select.current?.options[select.current.options.selectedIndex].value
+    let itemsArrey: Iitem[] = inputItems? inputItems : items
+    switch (opSelected) {
+      case "nome":
+        itemsArrey.sort((a, b)=>{
+          if(a.nome < b.nome){
+            return -1
+          }
+            return 1
+        })
+        break;
+    
+      default:
+        break;
+    }
+    const valueSerch = inputSearch.current?.value
+    let itemsArrayfiltred: Iitem[] = itemsArrey
+    if(valueSerch != "" && valueSerch){
+      itemsArrayfiltred = itemsArrey.filter(item => item.nome.includes(valueSerch))
+    }
+    setItemsFiltred(itemsArrayfiltred)
   }
 
 
   return (
     <main className="h-screen w-screen flex flex-col justify-between bg-zinc-900">
-      <Load isHidden={false}></Load>
+      <Load isHidden={load}></Load>
       <Header></Header>
       <section className="flex justify-center p-3" id="viewer">
         <div className="bg-white w-full h-full shadow shadow-zinc-600">
           <div className="bg-zinc-950 text-white flex justify-between items-center p-4" id="headerViewer">
             <h2 className="text-2xl">Produtos</h2>
             <div className="flex gap-6">
-              <input type="text" placeholder="Posquisar por:"/>
-              <select name="" id="">
-                <option value="">Nome</option>
+              <input type="text" placeholder="Posquisar por:" ref={inputSearch} onInput={()=>{filterItems()}} className="text-black"/>
+              <select name="" id="" ref={select} onInput={()=>{filterItems()}}>
+                <option value="nome">Nome</option>
               </select>
             </div>
           </div>
@@ -80,7 +112,7 @@ export default function Home() {
                 <li className="p-4" onClick={()=>handleScrap("promocoes", 2)}>Placa de Promoções</li>
               </ul>
             </div>
-            <div className="bg-stone-950 w-3/4 h-full">
+            <div className="bg-stone-950 w-3/4 h-full overflow-auto">
               {itemsFiltred.map((item, i)=>
                 <Card 
                   key={i} 
