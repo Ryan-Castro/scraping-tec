@@ -58,7 +58,7 @@ async function rounterFunction(res: Response, nameFile: string, link: string, ma
     }
     const dateCurrent = moment().format("YYYYMMDD")
     const datajson = JSON.parse(dataRead)
-    if(datajson[dateCurrent]){
+    if(datajson[dateCurrent] && datajson[dateCurrent].length > 0){
         res.json(datajson[dateCurrent])
     } else {
         const items = await scrapingKabum.start(link, marca)
