@@ -14,6 +14,14 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'static.kabum.com.br',
             },
+            {
+                protocol: 'https',
+                hostname: 'www.kabum.com.br',
+            },
+            {
+                protocol: 'https',
+                hostname: 'media.pichau.com.br',
+            },
         ],
     },
     
