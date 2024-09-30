@@ -24,7 +24,7 @@ O front-end consome a API do back-end e apresenta os dados de forma organizada e
 Para iniciar o desenvolvimento do front-end, execute `npm run dev` na pasta do front-end.
 
 ### Descktop
-<img href="./src/desktop.jpeg"/>
+<img src="./src/desktop.jpeg"/>
 
 ### Mobile
-<img href="./src/mobile.jpeg"/>
+<img src="./src/mobile.jpeg"/>
