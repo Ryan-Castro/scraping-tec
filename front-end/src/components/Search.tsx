@@ -12,7 +12,7 @@ interface ISearch{
 
 export default function Search(props: ISearch) {
     return (
-        <div className="w-full p-5 flex gap-5">
+        <div className="w-full p-5 flex flex-col gap-1 md:flex-row md:gap-5">
             <input type="text" placeholder="Nome da peça" className="pl-1 h-7" ref={props.inputs.text}/>
             <select name="" id="" className="pl-1 pr-6 h-7" ref={props.inputs.shopp}>
                 <option value="all">Todas as lojas</option>

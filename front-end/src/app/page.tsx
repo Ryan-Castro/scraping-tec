@@ -14,8 +14,6 @@ const options = {
   keys: ['nome']
 };
 
-
-
 export default function Home() {
   const parts = ["placadevideo", "processador", "promocoes"]
   const [currentPart, setCurrentPart] = useState(0)
@@ -25,8 +23,6 @@ export default function Home() {
     shopp: useRef<HTMLSelectElement>(null),
     order: useRef<HTMLSelectElement>(null)
   }
-
- 
 
   function setPart(productNumber: number){
     inputs.text.current!.value = ""
@@ -41,8 +37,6 @@ export default function Home() {
     sortAndShow(Filters)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[currentPart])
-
-
   async function search(){
     const shopSelect = inputs.shopp.current
     const OrderSelect = inputs.order.current
@@ -87,7 +81,6 @@ export default function Home() {
       })
     })
   }
-
   function sortAndShow(Filters: {text: string, shop: string,order: string,}){
     const items = localStorage.getItem("Items") ? JSON.parse(localStorage.getItem("Items")!) : {}
     let itemsForSort = items[parts[currentPart]]? items[parts[currentPart]] : []
@@ -153,7 +146,7 @@ export default function Home() {
 
   return(
     <div className="w-screen h-screen flex justify-center overflow-hidden bg-zinc-700 ">
-      <div id="container" className="max-w-4xl w-full h-screen flex justify-start flex-col bg-zinc-800">
+      <div id="container" className="sm:max-w-4xl w-full h-screen flex justify-start flex-col bg-zinc-800">
         <Header></Header>
         <Nav part={currentPart} handlePart={setPart}></Nav>
         <Search inputs={inputs} handleSearch={search}></Search>
