@@ -8,11 +8,11 @@ interface INav{
 
 export default function Nav(props:INav) {
     const parts = ["placa de vídeo", "processador", "armazenamento"]
-    const StyleLi = "w-1/3 h-10 flex justify-center items-center bg-zinc-900 border border-b-0 rounded-tl-xl rounded-tr-xl text-base opacity-50 text-center md:text-xl capitalize"
-    const StyleLiActive = "w-1/3 h-12 flex justify-center items-center bg-zinc-950 border border-b-0 rounded-tl-xl rounded-tr-xl text-xl text-center md:text-2xl capitalize"
+    const StyleLi = "       w-1/3 h-10 flex justify-center items-center bg-zinc-800 text-base opacity-50 text-center md:text-xl capitalize rounded-l-md"
+    const StyleLiActive = " w-1/3 h-10 flex justify-center items-center bg-zinc-900 text-xl text-center md:text-2xl capitalize"
     return (
-        <div className="w-full bg-zinc-800 text-white ">
-            <ul className="w-full p-5 pb-0 pt-3 flex justify-between items-end">
+        <div className="w-full bg-zinc-900 text-white rounded-t-2xl">
+            <ul className="w-full p-24 pb-0 pt-3 flex justify-between items-end gap-1">
                 {   
                     parts.map((part, i)=>{
                         if( i == props.part){

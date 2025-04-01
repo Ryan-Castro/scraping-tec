@@ -14,7 +14,6 @@
 #bodyViewer{
     height: 90%;
 }
-
 #loadCircle{
     animation: spin 5s infinite linear;
     position: relative;

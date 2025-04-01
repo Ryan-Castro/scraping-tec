@@ -37,6 +37,7 @@ export default function Home() {
     sortAndShow(Filters)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[currentPart])
+
   async function search(){
     const shopSelect = inputs.shopp.current
     const OrderSelect = inputs.order.current
@@ -45,14 +46,15 @@ export default function Home() {
       shop: shopSelect!.options[shopSelect!.selectedIndex].value,
       order: OrderSelect!.options[OrderSelect!.selectedIndex].value,
     }
-    const items = localStorage.getItem("Items") ? JSON.parse(localStorage.getItem("Items")!) : {}
+    const items: any = {placadevideo:[],processador:[],promocoes:[]}
     const shops = Filters.shop == "all" ? ["kabum", "terabyte", "pichau"] : [Filters.shop]
     for(let shop of shops){
       switch (parts[currentPart]) {
         case "placadevideo":
           const amd: any = await searchItems("placadevideo", "placavideoamd", shop);
           const nvidea: any = await searchItems("placadevideo", "placavideonvidia", shop);
-          items["placadevideo"] = [...amd, ...nvidea]
+          console.log(localStorage.getItem("Items"))
+          items["placadevideo"] = [...items["placadevideo"], ...amd, ...nvidea]
           localStorage.setItem("Items", JSON.stringify(items))
           break;
         case "processador":
@@ -74,6 +76,7 @@ export default function Home() {
     }
     sortAndShow(Filters)
   }
+
   async function searchItems(part: string, product: string, shop: string){
     return new Promise(async (resolve) => {
       await fetch(`http://localhost:3333/${shop}/search/${product}`).then(res=>res.json()).then((json)=>{
@@ -81,7 +84,8 @@ export default function Home() {
       })
     })
   }
-  function sortAndShow(Filters: {text: string, shop: string,order: string,}){
+
+  function sortAndShow(Filters: {text: string, shop: string,order: string}){
     const items = localStorage.getItem("Items") ? JSON.parse(localStorage.getItem("Items")!) : {}
     let itemsForSort = items[parts[currentPart]]? items[parts[currentPart]] : []
     if(Filters.text != ""){
@@ -141,12 +145,13 @@ export default function Home() {
       default:
         break;
     }
+    
     setItems(itemsForSort)
   }
 
   return(
-    <div className="w-screen h-screen flex justify-center overflow-hidden bg-zinc-700 ">
-      <div id="container" className="sm:max-w-4xl w-full h-screen flex justify-start flex-col bg-zinc-800">
+    <div className="w-screen h-screen flex justify-center overflow-hidden bg-zinc-800 ">
+      <div id="container" className="sm:max-w-7xl w-full h-screen flex justify-start flex-col">
         <Header></Header>
         <Nav part={currentPart} handlePart={setPart}></Nav>
         <Search inputs={inputs} handleSearch={search}></Search>
